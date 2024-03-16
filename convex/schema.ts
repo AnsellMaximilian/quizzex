@@ -17,6 +17,60 @@ export default defineSchema(
     numbers: defineTable({
       value: v.number(),
     }),
+
+    categoryList: defineTable({
+      title: v.string(),
+      values: v.array(
+        v.object({
+          name: v.string(),
+          points: v.number(),
+        })
+      ),
+    }),
+
+    categoryValues: defineTable({
+      name: v.string(),
+      points: v.number(),
+      categoryListId: v.id("categoryList"),
+    }),
+
+    themes: defineTable({
+      name: v.string(),
+    }),
+
+    listBattles: defineTable({
+      gameOver: v.boolean(),
+      gameStart: v.boolean(),
+
+      playerOneToken: v.string(),
+      playerTwoToken: v.optional(v.string()),
+
+      categoryListId: v.optional(v.id("categoryList")),
+
+      // playerOnePoints: v.number(),
+      // playerTwoPoints: v.number(),
+
+      endDateTime: v.optional(v.string()),
+
+      playerOneGuesses: v.array(
+        v.object({
+          value: v.string(),
+          points: v.number(),
+        })
+      ),
+
+      playerTwoGuesses: v.array(
+        v.object({
+          value: v.string(),
+          points: v.number(),
+        })
+      ),
+    }).index("gameOpen", [
+      "gameOver",
+      "playerTwoToken",
+      "gameStart",
+      "endDateTime",
+    ]),
   },
   // If you ever get an error about schema mismatch
   // between your data and your schema, and you cannot

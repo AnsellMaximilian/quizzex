@@ -7,19 +7,31 @@ import {
   useQuery,
 } from "convex/react";
 import { api } from "../convex/_generated/api";
-import Header from "./components/Header";
+import { useNavigate } from "react-router-dom";
 
 export default function App() {
+  const navigate = useNavigate();
+
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
+    <div className="flex flex-col">
       <main className=" bg-[#8D2676] text-white grow">
         <div className="container max-w-2xl flex flex-col gap-8">
           <h1 className="text-4xl font-extrabold my-8 text-center">
             Realtime Quizz Battles
           </h1>
           <Authenticated>
-            <SignedIn />
+            {/* <SignedIn /> */}
+
+            <div className="text-center">
+              <Button
+                className="bg-paletteMain-yellow"
+                onClick={() => {
+                  navigate("/waiting-room");
+                }}
+              >
+                To Battle!
+              </Button>
+            </div>
           </Authenticated>
           <Unauthenticated>
             <div className="flex justify-center">

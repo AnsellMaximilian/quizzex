@@ -8,13 +8,31 @@ import { ErrorBoundary } from "./ErrorBoundary";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Profile from "./pages/Profile";
+import WaitingRoom from "./pages/WaitingRoom";
+import MainLayout from "./components/layout/MainLayout";
+import ListBattle from "./pages/ListBattle";
 
 const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string);
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <MainLayout />,
+    children: [
+      {
+        path: "/waiting-room",
+        element: <WaitingRoom />,
+      },
+      {
+        path: "/list-battle/:id",
+        element: <ListBattle />,
+      },
+
+      {
+        path: "",
+        element: <App />,
+      },
+    ],
   },
   {
     path: "/profile",

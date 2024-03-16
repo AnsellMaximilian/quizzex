@@ -11,6 +11,12 @@ module.exports = {
     },
     extend: {
       colors: {
+        paletteMain: {
+          red: "#EE342F",
+          yellow: "#F3B01C",
+          green: "#00A505",
+          purple: "#8D2676",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

@@ -9,15 +9,18 @@ export default function Header() {
   return (
     <header className="p-4">
       <nav className="flex items-center gap-8">
-        <div>
+        <Link className="block" to="/">
           <img src={logo} className="w-48" />
-        </div>
+        </Link>
         <ul className="flex gap-3 items-center">
           <li>
-            <Link to="/battle">Battle</Link>
+            <Link to="/list-battle/3434">Battle</Link>
           </li>
           <li>
             <Link to="/profile">Profile</Link>
+          </li>
+          <li>
+            <Link to="/waiting-room">Waiting Room</Link>
           </li>
         </ul>
 
