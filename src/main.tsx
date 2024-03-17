@@ -15,6 +15,7 @@ import { Toaster } from "./components/ui/toaster";
 import ListBattleResult from "./pages/ListBattleResult";
 import ErrorPage from "./pages/ErrorPage";
 import AuthRoute from "./components/AuthRoute";
+import { UserContextProvider } from "./contexts/UserContext";
 
 const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string);
 
@@ -62,7 +63,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}
       >
         <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
-          <RouterProvider router={router} />
+          <UserContextProvider>
+            <RouterProvider router={router} />
+          </UserContextProvider>
         </ConvexProviderWithClerk>
       </ClerkProvider>
     </ErrorBoundary>
