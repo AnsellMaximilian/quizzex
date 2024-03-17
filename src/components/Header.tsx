@@ -12,17 +12,11 @@ export default function Header() {
         <Link className="block" to="/">
           <img src={logo} className="w-48" />
         </Link>
-        {/* <ul className="flex gap-3 items-center">
-          <li>
-            <Link to="/list-battle/3434">Battle</Link>
-          </li>
+        <ul className="flex gap-3 items-center">
           <li>
             <Link to="/profile">Profile</Link>
           </li>
-          <li>
-            <Link to="/waiting-room">Waiting Room</Link>
-          </li>
-        </ul> */}
+        </ul>
 
         <div className="ml-auto">
           <Authenticated>

@@ -48,12 +48,14 @@ export default defineSchema(
           points: v.number(),
         })
       ),
-    }).index("gameOpen", [
-      "gameOver",
-      "playerTwoToken",
-      "gameStart",
-      "endDateTime",
-    ]),
+    })
+      .index("gameOpen", [
+        "gameOver",
+        "playerTwoToken",
+        "gameStart",
+        "endDateTime",
+      ])
+      .index("byPlayers", ["playerOneToken", "playerTwoToken"]),
 
     triviaQuestions: defineTable({
       questionText: v.string(),
@@ -90,12 +92,14 @@ export default defineSchema(
           isCorrect: v.boolean(),
         })
       ),
-    }).index("gameOpen", [
-      "gameOver",
-      "playerTwoToken",
-      "gameStart",
-      "endDateTime",
-    ]),
+    })
+      .index("gameOpen", [
+        "gameOver",
+        "playerTwoToken",
+        "gameStart",
+        "endDateTime",
+      ])
+      .index("byPlayers", ["playerOneToken", "playerTwoToken"]),
   },
   // If you ever get an error about schema mismatch
   // between your data and your schema, and you cannot
