@@ -1,13 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { SignInButton } from "@clerk/clerk-react";
-import { Authenticated, Unauthenticated } from "convex/react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import icon from "@/assets/quizzex-icon.svg";
 import listBattleIcon from "@/assets/list-battle.svg";
+import comingSoonIcon from "@/assets/coming-soon.svg";
+import triviaIcon from "@/assets/trivia.svg";
 
 export default function App() {
-  const navigate = useNavigate();
-
   return (
     <div className="grow container mx-auto p-8 flex flex-col">
       <div className="text-center mb-8">
@@ -39,25 +36,28 @@ export default function App() {
             </p>
           </div>
         </Link>
-        <article className="col-span-4 bg-paletteMain-yellow rounded-lg border-4 border-white p-4 hover:bg-paletteMain-yellow/90">
+        <Link
+          to="/trivia-battle/waiting-room"
+          className="col-span-4 bg-paletteMain-yellow rounded-lg border-4 border-white p-4 hover:bg-paletteMain-yellow/90"
+        >
           <div className="p-4 flex justify-center rounded-lg  ">
-            <img src={listBattleIcon} className="w-32" />
+            <img src={triviaIcon} className="w-32" />
           </div>
           <hr />
           <div className="mt-2">
-            <div className="text-xl font-bold">List Battles</div>
+            <div className="text-xl font-bold">Trivia Battles</div>
             <p className="leading-5 tracking-tight">
               Battle users in a game of category!
             </p>
           </div>
-        </article>
+        </Link>
         <article className="col-span-4 bg-paletteMain-green rounded-lg border-4 border-white p-4 hover:bg-paletteMain-green/90">
           <div className="p-4 flex justify-center rounded-lg  ">
-            <img src={listBattleIcon} className="w-32" />
+            <img src={comingSoonIcon} className="w-32" />
           </div>
           <hr />
           <div className="mt-2">
-            <div className="text-xl font-bold">List Battles</div>
+            <div className="text-xl font-bold">Coming Soon!</div>
             <p className="leading-5 tracking-tight">
               Battle users in a game of category!
             </p>

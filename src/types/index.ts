@@ -3,3 +3,4 @@ export type ResponseObject<T> = {
   data?: T;
   statusString: "OK" | "ERROR";
 };
+export type Choice = "A" | "B" | "C" | "D";

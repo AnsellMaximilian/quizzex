@@ -23,16 +23,6 @@ export default defineSchema(
       ),
     }),
 
-    categoryValues: defineTable({
-      value: v.string(),
-      points: v.number(),
-      categoryListId: v.id("categoryList"),
-    }),
-
-    themes: defineTable({
-      name: v.string(),
-    }),
-
     listBattles: defineTable({
       gameOver: v.boolean(),
       gameStart: v.boolean(),
@@ -42,8 +32,6 @@ export default defineSchema(
 
       categoryListId: v.optional(v.id("categoryList")),
 
-      // playerOnePoints: v.number(),
-      // playerTwoPoints: v.number(),
       startDateTime: v.optional(v.string()),
       endDateTime: v.optional(v.string()),
 
@@ -58,6 +46,48 @@ export default defineSchema(
         v.object({
           value: v.string(),
           points: v.number(),
+        })
+      ),
+    }).index("gameOpen", [
+      "gameOver",
+      "playerTwoToken",
+      "gameStart",
+      "endDateTime",
+    ]),
+
+    triviaQuestions: defineTable({
+      questionText: v.string(),
+      choiceA: v.string(),
+      choiceB: v.string(),
+      choiceC: v.string(),
+      choiceD: v.string(),
+
+      correctChoice: v.string(),
+    }),
+
+    triviaBattles: defineTable({
+      gameOver: v.boolean(),
+      gameStart: v.boolean(),
+
+      playerOneToken: v.string(),
+      playerTwoToken: v.optional(v.string()),
+
+      triviaQuestionIds: v.array(v.id("triviaQuestions")),
+
+      startDateTime: v.optional(v.string()),
+      endDateTime: v.optional(v.string()),
+
+      playerOneResults: v.array(
+        v.object({
+          triviaQuestionId: v.id("triviaQuestions"),
+          isCorrect: v.boolean(),
+        })
+      ),
+
+      playerTwoResults: v.array(
+        v.object({
+          triviaQuestionId: v.id("triviaQuestions"),
+          isCorrect: v.boolean(),
         })
       ),
     }).index("gameOpen", [

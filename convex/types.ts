@@ -4,3 +4,5 @@ export type ResponseObject<T> = {
   statusString: "OK" | "ERROR";
   message: string;
 };
+
+export type Choice = "A" | "B" | "C" | "D";
