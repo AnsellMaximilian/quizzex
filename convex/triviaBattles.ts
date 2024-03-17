@@ -85,6 +85,8 @@ export const getTriviaBattle = query({
     const user = await ctx.auth.getUserIdentity();
     const triviaBattle = await ctx.db.get(id);
     let triviaQuestions;
+    let playerOne;
+    let playerTwo;
 
     if (triviaBattle) {
       triviaQuestions = await Promise.all(
@@ -93,9 +95,30 @@ export const getTriviaBattle = query({
           return triviaQuestion!;
         })
       );
+      playerOne = await ctx.db
+        .query("users")
+        .filter((q) =>
+          q.eq(q.field("tokenIdentifier"), triviaBattle.playerOneToken)
+        )
+        .unique();
+
+      if (triviaBattle.playerTwoToken) {
+        playerTwo = await ctx.db
+          .query("users")
+          .filter((q) =>
+            q.eq(q.field("tokenIdentifier"), triviaBattle.playerTwoToken)
+          )
+          .unique();
+      }
     }
 
-    return { triviaBattle, triviaQuestions, userToken: user?.tokenIdentifier };
+    return {
+      triviaBattle,
+      triviaQuestions,
+      userToken: user?.tokenIdentifier,
+      playerOne,
+      playerTwo,
+    };
   },
 });
 

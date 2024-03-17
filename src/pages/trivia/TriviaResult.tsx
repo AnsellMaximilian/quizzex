@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 
 export default function TriviaBattleResult() {
   const { id } = useParams();
-  const { triviaBattle, triviaQuestions, userToken } =
+  const { triviaBattle, playerOne, playerTwo, userToken } =
     useQuery(api.triviaBattles.getTriviaBattle, {
       id: (id || "") as Id<"triviaBattles">,
     }) ?? {};
@@ -45,6 +45,10 @@ export default function TriviaBattleResult() {
       ? "VICTORY"
       : "DEFEAT";
 
+  const currentUser = isPlayerOne ? playerOne : playerTwo;
+
+  const opponent = isPlayerOne ? playerTwo : playerOne;
+
   return (
     <div className="grow container mx-auto p-8 flex flex-col justify-center">
       {triviaBattle ? (
@@ -56,15 +60,26 @@ export default function TriviaBattleResult() {
             </div>
           </header>
           <div className="flex gap-4 mt-16 items-center">
-            <div className="text-center grow">
-              <div className="text-3xl font-semibold mb-2">Player One</div>
+            <div className={`text-center grow order-1`}>
+              <div className="mb-2 flex flex-col items-center gap-2">
+                <img
+                  src={currentUser?.profileUrl}
+                  className="w-40 rounded-full"
+                />
+                <div className="text-3xl font-semibold">
+                  {currentUser?.name}
+                </div>
+              </div>
               <div className="text-5xl font-bold">
                 <CountUp end={playerPoints} duration={1} /> correct
               </div>
             </div>
-            <div className="text-6xl font-bold">VS</div>
-            <div className="text-center grow">
-              <div className="text-3xl font-semibold mb-2">Player One</div>
+            <div className="text-6xl font-bold order-2">VS</div>
+            <div className={`text-center grow order-3`}>
+              <div className="mb-2 flex flex-col items-center gap-2">
+                <img src={opponent?.profileUrl} className="w-40 rounded-full" />
+                <div className="text-3xl font-semibold">{opponent?.name}</div>
+              </div>
               <div className="text-5xl font-bold">
                 <CountUp end={opponentPoints} duration={1} /> correct
               </div>
@@ -85,9 +100,7 @@ export default function TriviaBattleResult() {
       ) : (
         <div className="grow flex items-center justify-center flex-col">
           <img src={waitingSvg} className="w-96" />
-          <div className="text-3xl font-bold mt-8">
-            Waiting for another player to join...
-          </div>
+          <div className="text-3xl font-bold mt-8">Loading...</div>
         </div>
       )}
     </div>

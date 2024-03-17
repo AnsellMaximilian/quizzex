@@ -92,9 +92,15 @@ export default function TriviaBattle() {
   };
 
   if (
-    triviaBattle &&
-    triviaBattle.endDateTime &&
-    triviaBattle.endDateTime < new Date().toISOString()
+    (triviaBattle &&
+      triviaBattle.endDateTime &&
+      triviaBattle.endDateTime < new Date().toISOString()) ||
+    (triviaBattle &&
+      triviaBattle.playerTwoToken &&
+      triviaBattle.triviaQuestionIds.length ===
+        triviaBattle.playerOneResults.length &&
+      triviaBattle.triviaQuestionIds.length ===
+        triviaBattle.playerTwoResults.length)
   ) {
     return <Navigate to={`/trivia-battle/result/${triviaBattle._id}`} />;
   }

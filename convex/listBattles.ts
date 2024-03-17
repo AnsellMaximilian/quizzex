@@ -85,12 +85,35 @@ export const getListBattle = query({
     const user = await ctx.auth.getUserIdentity();
     const listBattle = await ctx.db.get(id);
     let categoryList;
+    let playerOne;
+    let playerTwo;
 
     if (listBattle && listBattle.categoryListId) {
+      playerOne = await ctx.db
+        .query("users")
+        .filter((q) =>
+          q.eq(q.field("tokenIdentifier"), listBattle.playerOneToken)
+        )
+        .unique();
+
+      if (listBattle.playerTwoToken) {
+        playerTwo = await ctx.db
+          .query("users")
+          .filter((q) =>
+            q.eq(q.field("tokenIdentifier"), listBattle.playerTwoToken)
+          )
+          .unique();
+      }
       categoryList = await ctx.db.get(listBattle.categoryListId);
     }
 
-    return { listBattle, categoryList, userToken: user?.tokenIdentifier };
+    return {
+      listBattle,
+      categoryList,
+      userToken: user?.tokenIdentifier,
+      playerOne,
+      playerTwo,
+    };
   },
 });
 

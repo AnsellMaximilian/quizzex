@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 
 export default function ListBattleResult() {
   const { id } = useParams();
-  const { listBattle, categoryList, userToken } =
+  const { listBattle, categoryList, userToken, playerOne, playerTwo } =
     useQuery(api.listBattles.getListBattle, {
       id: (id || "") as Id<"listBattles">,
     }) ?? {};
@@ -45,6 +45,20 @@ export default function ListBattleResult() {
       ? "VICTORY"
       : "DEFEAT";
 
+  console.log({
+    opponentGuessString,
+    opponentPoints,
+    currentUserGuessString,
+    playerPoints,
+    playerOne,
+    playerTwo,
+    isPlayerOne,
+  });
+
+  const currentUser = isPlayerOne ? playerOne : playerTwo;
+
+  const opponent = isPlayerOne ? playerTwo : playerOne;
+
   return (
     <div className="grow container mx-auto p-8 flex flex-col justify-center">
       {listBattle && categoryList ? (
@@ -58,15 +72,26 @@ export default function ListBattleResult() {
             </div>
           </header>
           <div className="flex gap-4 mt-16 items-center">
-            <div className="text-center grow">
-              <div className="text-3xl font-semibold mb-2">Player One</div>
+            <div className={`text-center grow order-1`}>
+              <div className="mb-2 flex flex-col items-center gap-2">
+                <img
+                  src={currentUser?.profileUrl}
+                  className="w-40 rounded-full"
+                />
+                <div className="text-3xl font-semibold">
+                  {currentUser?.name}
+                </div>
+              </div>
               <div className="text-5xl font-bold">
                 <CountUp end={playerPoints} duration={1} /> points
               </div>
             </div>
-            <div className="text-6xl font-bold">VS</div>
-            <div className="text-center grow">
-              <div className="text-3xl font-semibold mb-2">Player One</div>
+            <div className="text-6xl font-bold order-2">VS</div>
+            <div className={`text-center grow order-3`}>
+              <div className="mb-2 flex flex-col items-center gap-2">
+                <img src={opponent?.profileUrl} className="w-40 rounded-full" />
+                <div className="text-3xl font-semibold">{opponent?.name}</div>
+              </div>
               <div className="text-5xl font-bold">
                 <CountUp end={opponentPoints} duration={1} /> points
               </div>
@@ -87,9 +112,7 @@ export default function ListBattleResult() {
       ) : (
         <div className="grow flex items-center justify-center flex-col">
           <img src={waitingSvg} className="w-96" />
-          <div className="text-3xl font-bold mt-8">
-            Waiting for another player to join...
-          </div>
+          <div className="text-3xl font-bold mt-8">Loading...</div>
         </div>
       )}
     </div>
