@@ -2,10 +2,11 @@ import { api } from "../../convex/_generated/api";
 import { Id } from "../../convex/_generated/dataModel";
 import { useQuery } from "convex/react";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import CountUp from "react-countup";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import waitingSvg from "@/assets/waiting.svg";
+import { cn } from "@/lib/utils";
 
 export default function ListBattleResult() {
   const { id } = useParams();
@@ -23,6 +24,27 @@ export default function ListBattleResult() {
     ? "playerTwoGuesses"
     : "playerOneGuesses";
 
+  const playerPoints = listBattle
+    ? listBattle[currentUserGuessString].reduce(
+        (total, { points }) => total + points,
+        0
+      )
+    : 0;
+
+  const opponentPoints = listBattle
+    ? listBattle[opponentGuessString].reduce(
+        (total, { points }) => total + points,
+        0
+      )
+    : 0;
+
+  const resultString =
+    playerPoints === opponentPoints
+      ? "DRAW"
+      : playerPoints > opponentPoints
+      ? "VICTORY"
+      : "DEFEAT";
+
   return (
     <div className="grow container mx-auto p-8 flex flex-col justify-center">
       {listBattle && categoryList ? (
@@ -32,42 +54,34 @@ export default function ListBattleResult() {
               {categoryList?.title}
             </div>
             <div className="text-6xl font-bold text-paletteMain-yellow">
-              VICTORY!
+              {resultString}!
             </div>
           </header>
           <div className="flex gap-4 mt-16 items-center">
             <div className="text-center grow">
               <div className="text-3xl font-semibold mb-2">Player One</div>
               <div className="text-5xl font-bold">
-                <CountUp
-                  end={listBattle[currentUserGuessString].reduce(
-                    (total, { points }) => total + points,
-                    0
-                  )}
-                  duration={1}
-                />{" "}
-                points
+                <CountUp end={playerPoints} duration={1} /> points
               </div>
             </div>
             <div className="text-6xl font-bold">VS</div>
             <div className="text-center grow">
               <div className="text-3xl font-semibold mb-2">Player One</div>
               <div className="text-5xl font-bold">
-                <CountUp
-                  end={listBattle[opponentGuessString].reduce(
-                    (total, { points }) => total + points,
-                    0
-                  )}
-                  duration={1}
-                />{" "}
-                points
+                <CountUp end={opponentPoints} duration={1} /> points
               </div>
             </div>
           </div>
           <div className="flex justify-center mt-16">
-            <Button className="bg-paletteMain-yellow text-2xl px-6 py-2 h-auto">
+            <Link
+              to="/"
+              className={cn(
+                buttonVariants(),
+                "bg-paletteMain-yellow text-2xl px-6 py-2 h-auto hover:bg-paletteMain-yellow/90"
+              )}
+            >
               Home
-            </Button>
+            </Link>
           </div>
         </div>
       ) : (
