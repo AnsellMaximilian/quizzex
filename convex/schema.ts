@@ -22,14 +22,14 @@ export default defineSchema(
       title: v.string(),
       values: v.array(
         v.object({
-          name: v.string(),
+          value: v.string(),
           points: v.number(),
         })
       ),
     }),
 
     categoryValues: defineTable({
-      name: v.string(),
+      value: v.string(),
       points: v.number(),
       categoryListId: v.id("categoryList"),
     }),
@@ -49,7 +49,7 @@ export default defineSchema(
 
       // playerOnePoints: v.number(),
       // playerTwoPoints: v.number(),
-
+      startDateTime: v.optional(v.string()),
       endDateTime: v.optional(v.string()),
 
       playerOneGuesses: v.array(

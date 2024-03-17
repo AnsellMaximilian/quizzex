@@ -11,6 +11,8 @@ import Profile from "./pages/Profile";
 import WaitingRoom from "./pages/WaitingRoom";
 import MainLayout from "./components/layout/MainLayout";
 import ListBattle from "./pages/ListBattle";
+import { Toaster } from "./components/ui/toaster";
+import ListBattleResult from "./pages/ListBattleResult";
 
 const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string);
 
@@ -26,6 +28,11 @@ const router = createBrowserRouter([
       {
         path: "/list-battle/:id",
         element: <ListBattle />,
+      },
+
+      {
+        path: "/list-battle-result/:id",
+        element: <ListBattleResult />,
       },
 
       {
@@ -51,5 +58,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         </ConvexProviderWithClerk>
       </ClerkProvider>
     </ErrorBoundary>
+    <Toaster />
   </React.StrictMode>
 );

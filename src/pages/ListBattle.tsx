@@ -1,29 +1,43 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { SendHorizonal } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { api } from "../../convex/_generated/api";
-import { v } from "convex/values";
 import { Id } from "convex/_generated/dataModel";
 import { format } from "date-fns";
+import waitingSvg from "@/assets/waiting.svg";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function ListBattle() {
   const { id } = useParams();
 
+  const { toast } = useToast();
+
   const [currentDate, setCurrentDate] = useState(new Date());
 
-  const [startDateTime, setStartDateTime] = useState(new Date());
+  const guess = useMutation(api.listBattles.guessListValue);
 
-  const { listBattle, categoryList } =
+  const [guessValue, setguessValue] = useState("");
+
+  const { listBattle, categoryList, userToken } =
     useQuery(api.listBattles.getListBattle, {
       id: (id || "") as Id<"listBattles">,
     }) ?? {};
 
-  const endDateTime = new Date(startDateTime.getTime() + 5 * 60000);
+  const startDateTime = listBattle?.startDateTime
+    ? new Date(listBattle.startDateTime)
+    : null;
 
-  const totalTimeBetween = endDateTime.getTime() - startDateTime.getTime();
+  const endDateTime = listBattle?.endDateTime
+    ? new Date(listBattle.endDateTime)
+    : null;
+
+  const totalTimeBetween =
+    startDateTime && endDateTime
+      ? endDateTime.getTime() - startDateTime.getTime()
+      : null;
 
   useEffect(() => {
     const timeoutId = setInterval(() => {
@@ -34,16 +48,43 @@ export default function ListBattle() {
     };
   }, []);
 
-  useEffect(() => {
-    (async () => {})().catch((e) => {});
-  }, []);
-  const timeLeft = endDateTime.getTime() - currentDate.getTime();
-  const percent = (timeLeft / totalTimeBetween) * 100;
+  const timeLeft = endDateTime
+    ? endDateTime.getTime() - currentDate.getTime()
+    : null;
+  const percent =
+    timeLeft && totalTimeBetween ? (timeLeft / totalTimeBetween) * 100 : null;
 
-  console.log({
-    totalTimeBetween,
-    percent,
-  });
+  const isPlayerOne = userToken === listBattle?.playerOneToken;
+
+  const currentUserGuessString = isPlayerOne
+    ? "playerOneGuesses"
+    : "playerTwoGuesses";
+  const opponentGuessString = isPlayerOne
+    ? "playerTwoGuesses"
+    : "playerOneGuesses";
+
+  const onGuess: React.FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    void (async () => {
+      if (listBattle) {
+        const res = await guess({
+          listBattleId: listBattle._id,
+          guess: guessValue,
+        });
+        toast({ title: res.message, duration: 1000 });
+        setguessValue("");
+      }
+    })();
+  };
+
+  if (
+    listBattle &&
+    listBattle.endDateTime &&
+    listBattle.endDateTime < new Date().toISOString()
+  ) {
+    return <Navigate to={`/list-battle-result/${listBattle._id}`} />;
+  }
+
   return (
     <div className="grow container mx-auto p-8 flex flex-col">
       {listBattle && categoryList ? (
@@ -53,21 +94,26 @@ export default function ListBattle() {
               {categoryList.title}
             </header>
             <div className="grow text-black px-4 flex flex-col gap-2">
-              {Array.from({ length: 5 }).map((_, index) => {
+              {listBattle[currentUserGuessString].map((guess, index) => {
                 return (
                   <div className="flex gap-2 items-center text-sm" key={index}>
                     <div className="p-2 grow border-border border">
-                      Till I Collapse
+                      {guess.value}
                     </div>
                     <div className="bg-green-400 text-white p-2 rounded-md">
-                      +20
+                      +{guess.points}
                     </div>
                   </div>
                 );
               })}
             </div>
-            <form className="flex gap-4 p-4">
-              <Input />
+            <form className="flex gap-4 p-4" onSubmit={onGuess}>
+              <Input
+                className="text-black"
+                placeholder="Guess"
+                value={guessValue}
+                onChange={(e) => setguessValue(e.target.value)}
+              />
               <Button className="bg-paletteMain-yellow">
                 <SendHorizonal />
               </Button>
@@ -78,19 +124,26 @@ export default function ListBattle() {
               <div className="rounded-md bg-gray-500 p-2 text-right text-white font-semibold relative overflow-hidden">
                 <div
                   className="absolute left-0 inset-y-0 bg-paletteMain-green"
-                  style={{ width: `${percent}%` }}
+                  style={{ width: `${percent ?? 0}%` }}
                 ></div>
                 <span className="relative block">
-                  {format(new Date(timeLeft), "mm:ss")}
+                  {timeLeft ? format(new Date(timeLeft), "mm:ss") : "00:00"}
                 </span>
               </div>
               <div className="mt-4 rounded-md bg-paletteMain-yellow p-2 text-right text-white font-semibold relative overflow-hidden">
-                <span className="block">2000 points</span>
+                <span className="block">
+                  {listBattle[currentUserGuessString].reduce(
+                    (total, { points }) => total + points,
+                    0
+                  )}{" "}
+                  points
+                </span>
               </div>
             </div>
             <div className="bg-white p-4 rounded-md grow flex flex-col gap-4 text-xs">
+              <div className="font-semibold text-lg">Opponent</div>
               <div className="flex flex-col gap-2">
-                {Array.from({ length: 5 }).map((_, index) => {
+                {listBattle[opponentGuessString].map((guess, index) => {
                   return (
                     <div
                       className="flex gap-2 items-center text-xs"
@@ -100,21 +153,28 @@ export default function ListBattle() {
                         <div className="w-full bg-black rounded-full h-1 "></div>
                       </div>
                       <div className="bg-green-400 text-white p-1 rounded-md">
-                        +20
+                        +{guess.points}
                       </div>
                     </div>
                   );
                 })}
               </div>
               <div className="mt-auto p-2 bg-paletteMain-red rounded-md text-white text-right">
-                1500 points
+                {listBattle[opponentGuessString].reduce(
+                  (total, { points }) => total + points,
+                  0
+                )}{" "}
+                points
               </div>
             </div>
           </div>
         </div>
       ) : (
-        <div className="grow">
-          <div>Loading...</div>
+        <div className="grow flex items-center justify-center flex-col">
+          <img src={waitingSvg} className="w-96" />
+          <div className="text-3xl font-bold mt-8">
+            Waiting for another player to join...
+          </div>
         </div>
       )}
     </div>
