@@ -13,6 +13,8 @@ import MainLayout from "./components/layout/MainLayout";
 import ListBattle from "./pages/ListBattle";
 import { Toaster } from "./components/ui/toaster";
 import ListBattleResult from "./pages/ListBattleResult";
+import ErrorPage from "./pages/ErrorPage";
+import AuthRoute from "./components/AuthRoute";
 
 const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string);
 
@@ -20,10 +22,16 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    errorElement: <ErrorPage />,
+
     children: [
       {
         path: "/waiting-room",
-        element: <WaitingRoom />,
+        element: (
+          <AuthRoute>
+            <WaitingRoom />
+          </AuthRoute>
+        ),
       },
       {
         path: "/list-battle/:id",

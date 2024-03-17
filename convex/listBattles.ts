@@ -34,14 +34,8 @@ export const createListBattle = mutation({
   handler: async (ctx, args) => {
     const user = await ctx.auth.getUserIdentity();
     if (user) {
-      const startDateTime = new Date();
-      const endDateTime = new Date(startDateTime.getTime() + 90 * 1000);
-
       const listBattleId = await ctx.db.insert("listBattles", {
         playerOneToken: user?.tokenIdentifier,
-
-        startDateTime: startDateTime.toISOString(),
-        endDateTime: endDateTime.toISOString(),
 
         playerOneGuesses: [],
         playerTwoGuesses: [],
@@ -66,10 +60,14 @@ export const joinListBattle = mutation({
     const categoryLists = await ctx.db.query("categoryList").take(100);
 
     if (playerTwo && categoryLists.length > 0) {
+      const startDateTime = new Date();
+      const endDateTime = new Date(startDateTime.getTime() + 90 * 1000);
       await ctx.db.patch(id, {
         gameStart: true,
         playerTwoToken: playerTwo.tokenIdentifier,
         categoryListId: categoryLists[0]._id,
+        startDateTime: startDateTime.toISOString(),
+        endDateTime: endDateTime.toISOString(),
       });
 
       return await ctx.db.get(id);

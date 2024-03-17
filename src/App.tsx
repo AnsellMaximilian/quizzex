@@ -1,108 +1,88 @@
 import { Button } from "@/components/ui/button";
-import { SignInButton, UserButton } from "@clerk/clerk-react";
-import {
-  Authenticated,
-  Unauthenticated,
-  useMutation,
-  useQuery,
-} from "convex/react";
-import { api } from "../convex/_generated/api";
-import { useNavigate } from "react-router-dom";
+import { SignInButton } from "@clerk/clerk-react";
+import { Authenticated, Unauthenticated } from "convex/react";
+import { Link, useNavigate } from "react-router-dom";
+import icon from "@/assets/quizzex-icon.svg";
+import listBattleIcon from "@/assets/list-battle.svg";
 
 export default function App() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col">
-      <main className=" bg-[#8D2676] text-white grow">
-        <div className="container max-w-2xl flex flex-col gap-8">
-          <h1 className="text-4xl font-extrabold my-8 text-center">
-            Realtime Quizz Battles
-          </h1>
-          <Authenticated>
-            {/* <SignedIn /> */}
-
-            <div className="text-center">
-              <Button
-                className="bg-paletteMain-yellow"
-                onClick={() => {
-                  navigate("/waiting-room");
-                }}
-              >
-                To Battle!
-              </Button>
-            </div>
-          </Authenticated>
-          <Unauthenticated>
-            <div className="flex justify-center">
-              <SignInButton mode="modal">
-                <Button>Sign in</Button>
-              </SignInButton>
-            </div>
-          </Unauthenticated>
+    <div className="grow container mx-auto p-8 flex flex-col">
+      <div className="text-center mb-8">
+        <div className="flex justify-center mb-4">
+          <div className="rounded-full bg-white p-8">
+            <img src={icon} className="w-32" />
+          </div>
         </div>
-      </main>
+        <h1 className="text-4xl font-extrabold text-center">
+          Realtime Quizz Battles
+        </h1>
+        <p className="text-xl">
+          Fight against other users right from your browser!
+        </p>
+      </div>
+      <div className="grid grid-cols-12 gap-4 mb-8 max-w-3xl mx-auto">
+        <Link
+          to={"/waiting-room"}
+          className="col-span-4 bg-paletteMain-red rounded-lg border-4 border-white p-4 hover:bg-paletteMain-red/90"
+        >
+          <div className="p-4 flex justify-center rounded-lg  ">
+            <img src={listBattleIcon} className="w-32" />
+          </div>
+          <hr />
+          <div className="mt-2">
+            <div className="text-xl font-bold">List Battles</div>
+            <p className="leading-5 tracking-tight">
+              Battle users in a game of category!
+            </p>
+          </div>
+        </Link>
+        <article className="col-span-4 bg-paletteMain-yellow rounded-lg border-4 border-white p-4 hover:bg-paletteMain-yellow/90">
+          <div className="p-4 flex justify-center rounded-lg  ">
+            <img src={listBattleIcon} className="w-32" />
+          </div>
+          <hr />
+          <div className="mt-2">
+            <div className="text-xl font-bold">List Battles</div>
+            <p className="leading-5 tracking-tight">
+              Battle users in a game of category!
+            </p>
+          </div>
+        </article>
+        <article className="col-span-4 bg-paletteMain-green rounded-lg border-4 border-white p-4 hover:bg-paletteMain-green/90">
+          <div className="p-4 flex justify-center rounded-lg  ">
+            <img src={listBattleIcon} className="w-32" />
+          </div>
+          <hr />
+          <div className="mt-2">
+            <div className="text-xl font-bold">List Battles</div>
+            <p className="leading-5 tracking-tight">
+              Battle users in a game of category!
+            </p>
+          </div>
+        </article>
+      </div>
+      {/* <Authenticated>
+        <div className="text-center">
+          <Button
+            className="bg-paletteMain-yellow"
+            onClick={() => {
+              navigate("/waiting-room");
+            }}
+          >
+            To Battle!
+          </Button>
+        </div>
+      </Authenticated>
+      <Unauthenticated>
+        <div className="flex justify-center">
+          <SignInButton mode="modal">
+            <Button>Sign in</Button>
+          </SignInButton>
+        </div>
+      </Unauthenticated> */}
     </div>
-  );
-}
-
-function SignedIn() {
-  const { numbers, viewer } =
-    useQuery(api.myFunctions.listNumbers, {
-      count: 10,
-    }) ?? {};
-  const addNumber = useMutation(api.myFunctions.addNumber);
-
-  return (
-    <>
-      <p>Welcome {viewer}!</p>
-      <p className="flex gap-4 items-center">
-        This is you:
-        <UserButton afterSignOutUrl="#" />
-      </p>
-      <p>
-        Click the button below and open this page in another window - this data
-        is persisted in the Convex cloud database!
-      </p>
-      <p>
-        <Button
-          onClick={() => {
-            void addNumber({ value: Math.floor(Math.random() * 10) });
-          }}
-        >
-          Add a random number
-        </Button>
-      </p>
-      <p>
-        Numbers:{" "}
-        {numbers?.length === 0
-          ? "Click the button!"
-          : numbers?.join(", ") ?? "..."}
-      </p>
-      <p>
-        Edit{" "}
-        <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
-          convex/myFunctions.ts
-        </code>{" "}
-        to change your backend
-      </p>
-      <p>
-        Edit{" "}
-        <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
-          src/App.tsx
-        </code>{" "}
-        to change your frontend
-      </p>
-      <p>
-        Check out{" "}
-        <a
-          className="font-medium text-primary underline underline-offset-4"
-          target="_blank"
-          href="https://docs.convex.dev/home"
-        >
-          Convex docs
-        </a>
-      </p>
-    </>
   );
 }
