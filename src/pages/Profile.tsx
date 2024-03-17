@@ -158,15 +158,6 @@ export default function Profile() {
                 <h3 className="text-lg font-semibold mb-2">Unravel Battles</h3>
                 <div className="flex flex-col gap-2">
                   {unravelBattles?.map((ub) => {
-                    const isPlayerOne = userToken === ub.playerOneToken;
-
-                    const currentUserGuessString = isPlayerOne
-                      ? "playerOneGuesses"
-                      : "playerTwoGuesses";
-                    const opponentGuessString = isPlayerOne
-                      ? "playerTwoGuesses"
-                      : "playerOneGuesses";
-
                     const resultString =
                       ub.winnerToken === userToken ? "VICTORY" : "DEFEAT";
                     return (
