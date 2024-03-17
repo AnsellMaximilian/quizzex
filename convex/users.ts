@@ -68,6 +68,16 @@ export const getUserHistories = query({
         )
         .take(100);
 
+      const unravelBattles = await ctx.db
+        .query("unravelBattles")
+        .filter((q) =>
+          q.or(
+            q.eq(q.field("playerOneToken"), user.tokenIdentifier),
+            q.eq(q.field("playerTwoToken"), user.tokenIdentifier)
+          )
+        )
+        .take(100);
+
       const listBattlesWithUserData = await Promise.all(
         listBattles.map(async (battle) => {
           const opponentString =
@@ -110,9 +120,31 @@ export const getUserHistories = query({
         })
       );
 
+      const unravelBattlesWithUserData = await Promise.all(
+        unravelBattles.map(async (battle) => {
+          const opponentString =
+            battle.playerOneToken === user.tokenIdentifier
+              ? "playerTwoToken"
+              : "playerOneToken";
+
+          const opponent = await ctx.db
+            .query("users")
+            .filter((q) =>
+              q.eq(q.field("tokenIdentifier"), battle[opponentString])
+            )
+            .unique();
+
+          return {
+            ...battle,
+            opponent,
+          };
+        })
+      );
+
       return {
         listBattles: listBattlesWithUserData,
         triviaBattles: triviaBattlesWithUserData,
+        unravelBattles: unravelBattlesWithUserData,
         userToken: user.tokenIdentifier,
       };
     }

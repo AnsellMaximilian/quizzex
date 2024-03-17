@@ -100,6 +100,34 @@ export default defineSchema(
         "endDateTime",
       ])
       .index("byPlayers", ["playerOneToken", "playerTwoToken"]),
+
+    unravelBattles: defineTable({
+      gameOver: v.boolean(),
+      gameStart: v.boolean(),
+
+      playerOneToken: v.string(),
+      playerTwoToken: v.optional(v.string()),
+
+      startDateTime: v.optional(v.string()),
+      endDateTime: v.optional(v.string()),
+
+      wordToGuess: v.optional(v.string()),
+
+      playerOnTurnToken: v.optional(v.string()),
+
+      playerOneGuesses: v.array(v.string()),
+
+      playerTwoGuesses: v.array(v.string()),
+
+      winnerToken: v.optional(v.string()),
+    })
+      .index("gameOpen", [
+        "gameOver",
+        "playerTwoToken",
+        "gameStart",
+        "endDateTime",
+      ])
+      .index("byPlayers", ["playerOneToken", "playerTwoToken"]),
   },
   // If you ever get an error about schema mismatch
   // between your data and your schema, and you cannot

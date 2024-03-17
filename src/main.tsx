@@ -19,6 +19,9 @@ import { UserContextProvider } from "./contexts/UserContext";
 import TriviaBattle from "./pages/trivia/TriviaBattle";
 import TriviaWaitingRoom from "./pages/trivia/TriviaWaitingRoom";
 import TriviaBattleResult from "./pages/trivia/TriviaResult";
+import UnravelBattle from "./pages/unravel/UnravelBattle";
+import UnravelWaitingRoom from "./pages/unravel/UnravelWaitingRoom";
+import UnravelResult from "./pages/unravel/UnravelResult";
 
 const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string);
 
@@ -54,6 +57,17 @@ const router = createBrowserRouter([
           { path: "waiting-room", element: <TriviaWaitingRoom /> },
 
           { path: "result/:id", element: <TriviaBattleResult /> },
+        ],
+      },
+
+      {
+        path: "/unravel-battle",
+        children: [
+          { path: ":id", element: <UnravelBattle /> },
+
+          { path: "waiting-room", element: <UnravelWaitingRoom /> },
+
+          { path: "result/:id", element: <UnravelResult /> },
         ],
       },
 

@@ -17,7 +17,9 @@ import type {
 import type * as listBattles from "../listBattles.js";
 import type * as triviaBattles from "../triviaBattles.js";
 import type * as types from "../types.js";
+import type * as unravelBattles from "../unravelBattles.js";
 import type * as users from "../users.js";
+import type * as words from "../words.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -31,7 +33,9 @@ declare const fullApi: ApiFromModules<{
   listBattles: typeof listBattles;
   triviaBattles: typeof triviaBattles;
   types: typeof types;
+  unravelBattles: typeof unravelBattles;
   users: typeof users;
+  words: typeof words;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,

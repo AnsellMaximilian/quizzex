@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import icon from "@/assets/quizzex-icon.svg";
 import listBattleIcon from "@/assets/list-battle.svg";
-import comingSoonIcon from "@/assets/coming-soon.svg";
 import triviaIcon from "@/assets/trivia.svg";
+import unravelIcon from "@/assets/unravel.svg";
 
 export default function App() {
   return (
@@ -51,18 +51,21 @@ export default function App() {
             </p>
           </div>
         </Link>
-        <article className="col-span-4 bg-paletteMain-green rounded-lg border-4 border-white p-4 hover:bg-paletteMain-green/90">
+        <Link
+          to="/unravel-battle/waiting-room"
+          className="col-span-4 bg-paletteMain-green rounded-lg border-4 border-white p-4 hover:bg-paletteMain-green/90"
+        >
           <div className="p-4 flex justify-center rounded-lg  ">
-            <img src={comingSoonIcon} className="w-32" />
+            <img src={unravelIcon} className="w-32" />
           </div>
           <hr />
           <div className="mt-2">
-            <div className="text-xl font-bold">Coming Soon!</div>
+            <div className="text-xl font-bold">Unravel Battle</div>
             <p className="leading-5 tracking-tight">
               Battle users in a game of category!
             </p>
           </div>
-        </article>
+        </Link>
       </div>
       {/* <Authenticated>
         <div className="text-center">

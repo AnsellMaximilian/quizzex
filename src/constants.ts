@@ -3,3 +3,5 @@ export const GAME_STATE_STRINGS = {
   CREATE: "No battle found. Creating a new one...",
   JOIN: "Battle found! Joining battle...",
 };
+
+export const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");

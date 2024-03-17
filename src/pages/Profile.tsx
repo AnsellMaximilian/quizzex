@@ -5,7 +5,7 @@ import { Separator } from "@/components/ui/separator";
 
 export default function Profile() {
   const auth = useUser();
-  const { listBattles, triviaBattles, userToken } =
+  const { listBattles, triviaBattles, unravelBattles, userToken } =
     useQuery(api.users.getUserHistories) ?? {};
   return (
     <div className="grow container mx-auto p-8 flex flex-col gap-4">
@@ -33,7 +33,7 @@ export default function Profile() {
           <div className="bg-white rounded-lg p-6 text-black">
             <h2 className="text-2xl font-bold">Scores and History</h2>
             <Separator className="my-4" />
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 gap-4">
               <div>
                 <h3 className="text-lg font-semibold mb-2">List Battles</h3>
                 <div className="flex flex-col gap-2">
@@ -143,6 +143,43 @@ export default function Profile() {
                             resultString === "DRAW"
                               ? "bg-gray-500"
                               : resultString === "VICTORY"
+                              ? "bg-green-500"
+                              : "bg-red-500"
+                          }`}
+                        >
+                          {resultString}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold mb-2">Unravel Battles</h3>
+                <div className="flex flex-col gap-2">
+                  {unravelBattles?.map((ub) => {
+                    const isPlayerOne = userToken === ub.playerOneToken;
+
+                    const currentUserGuessString = isPlayerOne
+                      ? "playerOneGuesses"
+                      : "playerTwoGuesses";
+                    const opponentGuessString = isPlayerOne
+                      ? "playerTwoGuesses"
+                      : "playerOneGuesses";
+
+                    const resultString =
+                      ub.winnerToken === userToken ? "VICTORY" : "DEFEAT";
+                    return (
+                      <div
+                        key={ub._id}
+                        className="p-2 border border-border rounded-md flex gap-2 items-center"
+                      >
+                        <div className="font-semibold text-sm">
+                          YOU vs. {ub.opponent?.name}
+                        </div>
+                        <div
+                          className={`ml-auto text-xs p-1 text-white rounded-md font-bold ${
+                            resultString === "VICTORY"
                               ? "bg-green-500"
                               : "bg-red-500"
                           }`}
