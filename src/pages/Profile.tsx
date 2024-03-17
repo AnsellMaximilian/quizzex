@@ -75,11 +75,11 @@ export default function Profile() {
                         <div className="font-semibold text-sm">
                           YOU vs. {lb.opponent?.name}
                         </div>
-                        <div className="ml-auto text-sm font-bold">
+                        {/* <div className="ml-auto text-sm font-bold">
                           {playerPoints} vs {opponentPoints}{" "}
-                        </div>
+                        </div> */}
                         <div
-                          className={`text-xs p-1 text-white rounded-md font-bold ${
+                          className={`ml-auto text-xs p-1 text-white rounded-md font-bold ${
                             resultString === "DRAW"
                               ? "bg-gray-500"
                               : resultString === "VICTORY"
@@ -135,11 +135,11 @@ export default function Profile() {
                         <div className="font-semibold text-sm">
                           YOU vs. {tb.opponent?.name}
                         </div>
-                        <div className="ml-auto text-sm font-bold">
+                        {/* <div className="grow text-sm font-bold text-right">
                           {playerPoints} vs {opponentPoints}{" "}
-                        </div>
+                        </div> */}
                         <div
-                          className={`text-xs p-1 text-white rounded-md font-bold ${
+                          className={`ml-auto text-xs p-1 text-white rounded-md font-bold ${
                             resultString === "DRAW"
                               ? "bg-gray-500"
                               : resultString === "VICTORY"
