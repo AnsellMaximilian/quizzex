@@ -44,7 +44,7 @@ export const store = mutation({
 
 export const getUserHistories = query({
   args: {},
-  handler: async (ctx, args) => {
+  handler: async (ctx) => {
     const user = await ctx.auth.getUserIdentity();
 
     if (user) {

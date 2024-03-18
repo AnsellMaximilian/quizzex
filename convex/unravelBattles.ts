@@ -1,11 +1,11 @@
 import { v } from "convex/values";
-import { query, mutation, action } from "./_generated/server";
-import { Choice, ResponseObject } from "./types";
+import { query, mutation } from "./_generated/server";
+import { ResponseObject } from "./types";
 import { words } from "./words";
 
 export const findUnravelBattle = query({
   args: {},
-  handler: async (ctx, args) => {
+  handler: async (ctx) => {
     const user = await ctx.auth.getUserIdentity();
 
     if (user) {
@@ -32,7 +32,7 @@ export const findUnravelBattle = query({
 
 export const createUnravelBattle = mutation({
   args: {},
-  handler: async (ctx, args) => {
+  handler: async (ctx) => {
     const user = await ctx.auth.getUserIdentity();
     if (user) {
       const unravelBattleId = await ctx.db.insert("unravelBattles", {

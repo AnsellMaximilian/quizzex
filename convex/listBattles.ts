@@ -1,10 +1,10 @@
 import { v } from "convex/values";
-import { query, mutation, action } from "./_generated/server";
+import { query, mutation } from "./_generated/server";
 import { ResponseObject } from "./types";
 
 export const findListBattle = query({
   args: {},
-  handler: async (ctx, args) => {
+  handler: async (ctx) => {
     const user = await ctx.auth.getUserIdentity();
 
     if (user) {
@@ -31,7 +31,7 @@ export const findListBattle = query({
 
 export const createListBattle = mutation({
   args: {},
-  handler: async (ctx, args) => {
+  handler: async (ctx) => {
     const user = await ctx.auth.getUserIdentity();
     if (user) {
       const listBattleId = await ctx.db.insert("listBattles", {

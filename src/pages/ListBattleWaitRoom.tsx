@@ -23,7 +23,7 @@ export default function WaitingRoom() {
   const navigate = useNavigate();
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      (async () => {
+      void (async () => {
         if (!foundListBattle) {
           // in 10 seconds, no list has been found, then create one
           setGameState("CREATE");
@@ -37,7 +37,7 @@ export default function WaitingRoom() {
           navigate(`/list-battle/${foundListBattle._id}`);
           console.log("FOUND IN TEN SECONDS");
         }
-      })().catch((e) => {});
+      })();
     }, 5000);
 
     return () => {

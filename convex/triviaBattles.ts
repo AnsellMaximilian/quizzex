@@ -1,10 +1,10 @@
 import { v } from "convex/values";
-import { query, mutation, action } from "./_generated/server";
+import { query, mutation } from "./_generated/server";
 import { Choice, ResponseObject } from "./types";
 
 export const findTriviaBattle = query({
   args: {},
-  handler: async (ctx, args) => {
+  handler: async (ctx) => {
     const user = await ctx.auth.getUserIdentity();
 
     if (user) {
@@ -31,7 +31,7 @@ export const findTriviaBattle = query({
 
 export const createTriviaBattle = mutation({
   args: {},
-  handler: async (ctx, args) => {
+  handler: async (ctx) => {
     const user = await ctx.auth.getUserIdentity();
     if (user) {
       const triviaBattleId = await ctx.db.insert("triviaBattles", {

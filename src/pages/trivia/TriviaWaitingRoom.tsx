@@ -18,7 +18,7 @@ export default function TriviaWaitingRoom() {
   const navigate = useNavigate();
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      (async () => {
+      void (async () => {
         if (!foundTriviaBattle) {
           // in 10 seconds, no list has been found, then create one
           setGameState("CREATE");
@@ -32,7 +32,7 @@ export default function TriviaWaitingRoom() {
           navigate(`/trivia-battle/${foundTriviaBattle._id}`);
           console.log("FOUND IN TEN SECONDS");
         }
-      })().catch((e) => {});
+      })();
     }, 5000);
 
     return () => {

@@ -9,7 +9,6 @@ import { Id } from "convex/_generated/dataModel";
 import { format } from "date-fns";
 import waitingSvg from "@/assets/waiting.svg";
 import { useToast } from "@/components/ui/use-toast";
-import { Choice } from "convex/types";
 import { ALPHABET } from "@/constants";
 
 export default function UnravelBattle() {

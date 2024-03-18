@@ -1,10 +1,9 @@
 import { api } from "../../convex/_generated/api";
 import { Id } from "../../convex/_generated/dataModel";
 import { useQuery } from "convex/react";
-import React from "react";
 import { Link, useParams } from "react-router-dom";
 import CountUp from "react-countup";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import waitingSvg from "@/assets/waiting.svg";
 import { cn } from "@/lib/utils";
 

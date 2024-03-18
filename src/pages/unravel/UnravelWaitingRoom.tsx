@@ -20,7 +20,7 @@ export default function UnravelWaitingRoom() {
   const navigate = useNavigate();
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      (async () => {
+      void (async () => {
         if (!foundUnravelBattle) {
           // in 10 seconds, no list has been found, then create one
           setGameState("CREATE");
@@ -34,7 +34,7 @@ export default function UnravelWaitingRoom() {
           navigate(`/unravel-battle/${foundUnravelBattle._id}`);
           console.log("FOUND IN TEN SECONDS");
         }
-      })().catch((e) => {});
+      })();
     }, 5000);
 
     return () => {

@@ -1,7 +1,4 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useMutation, useQuery } from "convex/react";
-import { SendHorizonal } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { api } from "../../../convex/_generated/api";
