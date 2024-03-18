@@ -62,10 +62,20 @@ export const joinTriviaBattle = mutation({
     if (playerTwo && triviaQuestions.length > 0) {
       const startDateTime = new Date();
       const endDateTime = new Date(startDateTime.getTime() + 90 * 1000);
+
+      const randomNumbers = new Set<number>();
+      while (randomNumbers.size < 4) {
+        const randomNumber = Math.floor(Math.random() * triviaQuestions.length);
+        randomNumbers.add(randomNumber);
+      }
+
       await ctx.db.patch(id, {
         gameStart: true,
         playerTwoToken: playerTwo.tokenIdentifier,
-        triviaQuestionIds: triviaQuestions.slice(0, 4).map((tq) => tq._id),
+        triviaQuestionIds: Array.from(randomNumbers)
+          .map((index) => triviaQuestions[index])
+          .slice(0, 4)
+          .map((tq) => tq._id),
         startDateTime: startDateTime.toISOString(),
         endDateTime: endDateTime.toISOString(),
       });

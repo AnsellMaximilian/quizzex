@@ -65,7 +65,8 @@ export const joinListBattle = mutation({
       await ctx.db.patch(id, {
         gameStart: true,
         playerTwoToken: playerTwo.tokenIdentifier,
-        categoryListId: categoryLists[0]._id,
+        categoryListId:
+          categoryLists[Math.floor(Math.random() * categoryLists.length)]._id,
         startDateTime: startDateTime.toISOString(),
         endDateTime: endDateTime.toISOString(),
       });
