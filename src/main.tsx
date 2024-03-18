@@ -54,7 +54,14 @@ const router = createBrowserRouter([
         children: [
           { path: ":id", element: <TriviaBattle /> },
 
-          { path: "waiting-room", element: <TriviaWaitingRoom /> },
+          {
+            path: "waiting-room",
+            element: (
+              <AuthRoute>
+                <TriviaWaitingRoom />
+              </AuthRoute>
+            ),
+          },
 
           { path: "result/:id", element: <TriviaBattleResult /> },
         ],
@@ -65,7 +72,14 @@ const router = createBrowserRouter([
         children: [
           { path: ":id", element: <UnravelBattle /> },
 
-          { path: "waiting-room", element: <UnravelWaitingRoom /> },
+          {
+            path: "waiting-room",
+            element: (
+              <AuthRoute>
+                <UnravelWaitingRoom />
+              </AuthRoute>
+            ),
+          },
 
           { path: "result/:id", element: <UnravelResult /> },
         ],
@@ -77,7 +91,11 @@ const router = createBrowserRouter([
       },
       {
         path: "profile",
-        element: <Profile />,
+        element: (
+          <AuthRoute>
+            <Profile />
+          </AuthRoute>
+        ),
       },
     ],
   },

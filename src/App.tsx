@@ -23,46 +23,49 @@ export default function App() {
       <div className="grid grid-cols-12 gap-4 mb-8 max-w-3xl mx-auto">
         <Link
           to={"/waiting-room"}
-          className="col-span-4 bg-paletteMain-red rounded-lg border-4 border-white p-4 hover:bg-paletteMain-red/90"
+          className="col-span-4 bg-paletteMain-red rounded-lg border-4 border-white p-4 hover:bg-paletteMain-red/90 flex flex-col"
         >
-          <div className="p-4 flex justify-center rounded-lg  ">
+          <div className="p-4 flex justify-center rounded-lg grow">
             <img src={listBattleIcon} className="w-32" />
           </div>
           <hr />
           <div className="mt-2">
             <div className="text-xl font-bold">List Battles</div>
             <p className="leading-5 tracking-tight">
-              Battle users in a game of category!
+              Compete to submit the most items belonging in a category before
+              the time runs out!
             </p>
           </div>
         </Link>
         <Link
           to="/trivia-battle/waiting-room"
-          className="col-span-4 bg-paletteMain-yellow rounded-lg border-4 border-white p-4 hover:bg-paletteMain-yellow/90"
+          className="col-span-4 bg-paletteMain-yellow rounded-lg border-4 border-white p-4 hover:bg-paletteMain-yellow/90 flex flex-col"
         >
-          <div className="p-4 flex justify-center rounded-lg  ">
+          <div className="p-4 flex justify-center rounded-lg grow">
             <img src={triviaIcon} className="w-32" />
           </div>
           <hr />
           <div className="mt-2">
             <div className="text-xl font-bold">Trivia Battles</div>
             <p className="leading-5 tracking-tight">
-              Battle users in a game of category!
+              Answer a series of fun trivia questions and get more right than
+              your opponent!
             </p>
           </div>
         </Link>
         <Link
           to="/unravel-battle/waiting-room"
-          className="col-span-4 bg-paletteMain-green rounded-lg border-4 border-white p-4 hover:bg-paletteMain-green/90"
+          className="col-span-4 bg-paletteMain-green rounded-lg border-4 border-white p-4 hover:bg-paletteMain-green/90 flex flex-col"
         >
-          <div className="p-4 flex justify-center rounded-lg  ">
+          <div className="p-4 flex justify-center rounded-lg grow">
             <img src={unravelIcon} className="w-32" />
           </div>
           <hr />
           <div className="mt-2">
             <div className="text-xl font-bold">Unravel Battle</div>
             <p className="leading-5 tracking-tight">
-              Battle users in a game of category!
+              Guess the randomly generated word letter-by-letter or guess the
+              whole word!
             </p>
           </div>
         </Link>
