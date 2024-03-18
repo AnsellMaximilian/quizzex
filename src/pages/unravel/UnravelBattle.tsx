@@ -177,15 +177,15 @@ export default function UnravelBattle() {
 
                 <div className="flex gap-2">
                   <div
-                    className={`px-2 py-1 rounded-md font-bold text-muted-foreground bg-muted ${
-                      isPlayerTurn ? "bg-green-500 text-white" : ""
+                    className={`px-2 py-1 rounded-md font-bold text-muted-foreground ${
+                      isPlayerTurn ? "bg-green-500 text-white" : "bg-muted"
                     }`}
                   >
                     YOU
                   </div>
                   <div
-                    className={`px-2 py-1 rounded-md font-bold text-muted-foreground bg-muted ${
-                      !isPlayerTurn ? "bg-green-500 text-white" : ""
+                    className={`px-2 py-1 rounded-md font-bold text-muted-foreground ${
+                      !isPlayerTurn ? "bg-green-500 text-white" : "bg-muted"
                     }`}
                   >
                     OPPONENT
