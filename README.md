@@ -1,22 +1,13 @@
-# Convex + TypeScript + ESLint + Vite + React + Clerk + Tailwind + shadcn/ui
+# Quizzex - Realtime Quiz Battles with Convex
 
-This template provides a minimal setup to get Convex working, with TypeScript,
-ESLint and React using [Vite](https://vitejs.dev/). It uses [Clerk](https://clerk.dev/) for user authentication.
+Quizzex is a center for online games where players/users can battle each other virtually in real time. This means all participating players in a game/battle will actually be playing at the same time.
 
-Start by editing `convex/myFunctions.ts` and interact with your React app.
+## Plans
 
-See Convex docs at https://docs.convex.dev/home
-
-## Setting up
-
-```
-npm create convex@latest -t react-vite-clerk-shadcn
-```
-
-Then:
-
-1. Follow steps 1 to 3 in the [Clerk onboarding guide](https://docs.convex.dev/auth/clerk#get-started)
-2. Paste the Issuer URL as `CLERK_JWT_ISSUER_DOMAIN` to your dev deployment environment variable settings on the Convex dashboard (see [docs](https://docs.convex.dev/auth/clerk#configuring-dev-and-prod-instances))
-3. Paste your publishable key as `VITE_CLERK_PUBLISHABLE_KEY="<your publishable key>"` to the `.env.local` file in this directory.
-
-If you want to sync Clerk user data via webhooks, check out this [example repo](https://github.com/thomasballinger/convex-clerk-users-table/).
+- Make home page responsive
+- Make components more modular, particularly quiz battle arenas
+- Make generic reusable lists in database to be used in multiple games. (eg. words, sentences, etc.)
+- User-generated content: Users will be able to create their own lists and trivia questions. A rating system will be implemented to prevent bad actors from creating bad/malicious content.
+- Invite codes: invite specific players to a game by giving them battle codes
+- More game types: family-feud style games, codenames, etc
+- Follow/friends system
