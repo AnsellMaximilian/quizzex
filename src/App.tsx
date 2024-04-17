@@ -20,10 +20,10 @@ export default function App() {
           Fight against other users right from your browser!
         </p>
       </div>
-      <div className="grid grid-cols-12 gap-4 mb-8 max-w-3xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 max-w-3xl mx-auto">
         <Link
           to={"/waiting-room"}
-          className="col-span-4 bg-paletteMain-red rounded-lg border-4 border-white p-4 hover:bg-paletteMain-red/90 flex flex-col"
+          className="bg-paletteMain-red rounded-lg border-4 border-white p-4 hover:bg-paletteMain-red/90 flex flex-col"
         >
           <div className="p-4 flex justify-center rounded-lg grow">
             <img src={listBattleIcon} className="w-32" />
@@ -39,7 +39,7 @@ export default function App() {
         </Link>
         <Link
           to="/trivia-battle/waiting-room"
-          className="col-span-4 bg-paletteMain-yellow rounded-lg border-4 border-white p-4 hover:bg-paletteMain-yellow/90 flex flex-col"
+          className="bg-paletteMain-yellow rounded-lg border-4 border-white p-4 hover:bg-paletteMain-yellow/90 flex flex-col"
         >
           <div className="p-4 flex justify-center rounded-lg grow">
             <img src={triviaIcon} className="w-32" />
@@ -55,7 +55,7 @@ export default function App() {
         </Link>
         <Link
           to="/unravel-battle/waiting-room"
-          className="col-span-4 bg-paletteMain-green rounded-lg border-4 border-white p-4 hover:bg-paletteMain-green/90 flex flex-col"
+          className="bg-paletteMain-green rounded-lg border-4 border-white p-4 hover:bg-paletteMain-green/90 flex flex-col"
         >
           <div className="p-4 flex justify-center rounded-lg grow">
             <img src={unravelIcon} className="w-32" />
